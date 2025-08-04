@@ -25,7 +25,7 @@ const server = http.createServer(app);
 // Socket.IO setup
 const io = new Server(server, {
   cors: {
-    origin: "https://aap-jaisa-koi.vercel.app", // Allow all for now (customize later in production)
+    origin: "*", // Allow all for now (customize later in production)
     methods: ["GET", "POST"],
   },
 });
