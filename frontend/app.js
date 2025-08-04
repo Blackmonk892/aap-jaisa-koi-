@@ -1,6 +1,6 @@
 // public/app.js
 
-const socket = io(window.location.origin); // auto-connect to backend
+const socket = io("https://aap-jaisa-koi-production.up.railway.app"); // auto-connect to backend
 
 // DOM Elements
 const startBtn = document.getElementById("startChat");
