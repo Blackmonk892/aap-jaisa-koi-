@@ -10,7 +10,7 @@ const { setupSocketHandlers } = require("./socketHandlers");
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../frontend")));
+
 
 // Basic CORS setup (you can customize allowed origins)
 app.use(cors());
