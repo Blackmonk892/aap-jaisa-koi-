@@ -34,6 +34,6 @@ const io = new Server(server, {
 setupSocketHandlers(io);
 
 // Start server
-server.listen(PORT, () => {
-  console.log(`🚀 Signaling server listening on http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Signaling server listening on http://0.0.0.0:${PORT}`);
 });
