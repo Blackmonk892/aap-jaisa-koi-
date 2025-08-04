@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#0f0e17] text-gray-200">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aap Jaisa Koi 💞</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="/socket.io/socket.io.js"></script>
+    <script defer src="app.js"></script>
+    <style>
+      .glow-btn {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ff4ecd, #6a5af9);
+        color: white;
+        box-shadow: 0 0 15px rgba(255, 78, 205, 0.5);
+        transition: transform 0.2s, box-shadow 0.3s;
+      }
+      .glow-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(255, 78, 205, 0.8);
+      }
+      .pulse {
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
+      /* Chat message styles (same as app.js expects) */
+      .chat-message {
+        padding: 0.3rem 0.6rem;
+        border-radius: 0.75rem;
+        max-width: 80%;
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+      }
+
+      .chat-message.me {
+        background-color: rgba(255, 255, 255, 0.1);
+        align-self: flex-end;
+      }
+      .chat-message.them {
+        background-color: rgba(255, 255, 255, 0.2);
+        align-self: flex-start;
+      }
+      #chatBox::-webkit-scrollbar {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      #chatBox::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body class="font-sans min-h-screen flex items-center justify-center px-4">
+    <div id="app" class="w-full max-w-md mx-auto text-center">
+      <!-- Home Screen -->
+      <section class="space-y-8 py-20 relative">
+        <h1 class="text-5xl font-bold text-white drop-shadow-md">
+          Aap Jaisa Koi
+        </h1>
+        <p class="text-md text-purple-300 italic">
+          Meet someone who feels just right
+        </p>
+        <button id="startChat" class="glow-btn">🎧 Start Chat</button>
+      </section>
+
+      <!-- Matching Status -->
+      <p id="status" class="text-sm text-purple-300 animate-pulse hidden">
+        🔎 Looking for a match...
+      </p>
+
+      <!-- Call Screen -->
+      <section
+        id="callScreen"
+        class="hidden flex flex-col items-center justify-center space-y-6 py-8"
+      >
+        <!-- Status Message -->
+        <p class="text-lg font-medium text-purple-200">
+          🎙 Connected. Say hi to your stranger!
+        </p>
+
+        <!-- Audio Visual -->
+        <div class="flex justify-center">
+          <div
+            class="w-32 h-32 rounded-full bg-[#1a1a2e] flex items-center justify-center shadow-inner relative"
+          >
+            <div
+              class="w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full pulse"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Remote Audio Stream -->
+        <audio id="remoteAudio" autoplay></audio>
+
+        <!-- Chat Box -->
+        <div
+          id="chatBox"
+          class="flex flex-col text-left max-h-64 overflow-y-auto bg-[#1f1f2e] rounded-xl shadow p-4 space-y-2 text-sm w-full"
+        >
+          <div class="text-purple-400 text-center italic">
+            Messages disappear after chat
+          </div>
+        </div>
+
+        <!-- Chat Input -->
+        <input
+          id="chatInput"
+          type="text"
+          placeholder="Say something..."
+          class="w-full px-4 py-2 rounded-full bg-[#2a2a3c] text-white placeholder:text-purple-400 focus:outline-none focus:ring-2 focus:ring-pink-400"
+        />
+
+        <!-- Control Buttons -->
+        <div class="flex gap-4 mt-4">
+          <button
+            id="nextBtn"
+            class="glow-btn bg-yellow-500 hover:bg-yellow-600"
+          >
+            ⏭ Next
+          </button>
+          <button id="leaveBtn" class="glow-btn bg-red-500 hover:bg-red-600">
+            ❌ Leave
+          </button>
+        </div>
+      </section>
+    </div>
+    <div
+      id="onlineCount"
+      class="fixed top-4 right-4 text-xs bg-[#1f1f2e] text-purple-300 px-3 py-1 rounded-full shadow-lg z-50"
+    ></div>
+  </body>
+</html>
